@@ -16,7 +16,6 @@ function listen(keys, res) {
       var exchange = 'hw3';
 
       ch.assertQueue('', { exclusive: true }, function (err, q) {
-        console.log('Queue Created!');
 
         keys.forEach(function (key) {
           ch.bindQueue(q.queue, exchange, key);
@@ -50,13 +49,13 @@ function speak(key, msg) {
 
       ch.publish(ex, key, new Buffer(msg));
       console.log(" [x] Sent %s: '%s'", key, msg);
-      setTimeout(function() { conn.close();}, 500);
+      //setTimeout(function() { conn.close();}, 500);
+      conn.close();
     });
   });
 }
 
 app.post('/speak', function (req, res) {
-  //console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
   res.sendStatus(200);
   speak(req.body.key.toString(), req.body.msg.toString());
 })
