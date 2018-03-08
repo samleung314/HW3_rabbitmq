@@ -14,3 +14,10 @@ app.post('/speak', function (req, res) {
   res.send(200);
   //speak(req.body.key.toString(), req.body.msg.toString());
 })
+
+// server.js
+var port = process.env.PORT || 80;
+
+var server = app.listen(port, function () {
+   console.log("HW3 RabbitMQ listening on port: " + port)
+})
