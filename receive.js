@@ -1,20 +1,20 @@
 var amqp = require('amqplib/callback_api');
 
-var keys = ['a','b','c','d','e']
-amqp.connect('amqp://localhost', function(err, conn) {
-  conn.createChannel(function(err, ch) {
-    var exchange = 'hw3';
+amqp.connect('amqp://localhost', function (err, conn) {
+  conn.createChannel(function (err, ch) {
+    var ex = 'hw3';
 
-    ch.assertQueue('', {exclusive: true}, function(err, que) {
-      console.log(' [*] Waiting for messages. To exit press CTRL+C');
+    ch.assertQueue('', { exclusive: true }, function (err, q) {
+      console.log(' [*] Waiting for logs. To exit press CTRL+C');
 
-      keys.forEach(function(key) {
-        ch.bindQueue(que.queue, exchange, key);
+      keys.forEach(function (key) {
+        ch.bindQueue(q.queue, ex, key);
       });
 
-      ch.consume(que.queue, function(msg) {
+      ch.consume(q.queue, function (msg) {
         console.log(" [x] %s: '%s'", msg.fields.routingKey, msg.content.toString());
-      }, {noAck: true});
+      }, { noAck: true });
     });
+
   });
 });

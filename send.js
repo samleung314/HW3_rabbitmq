@@ -2,13 +2,13 @@ var amqp = require('amqplib/callback_api');
 
 amqp.connect('amqp://localhost', function(err, conn) {
   conn.createChannel(function(err, ch) {
-    var exchange = 'hw3';
-    var msg = 'Hello World!';
+    var ex = 'hw3';
 
-    ch.assertQueue(exchange, {durable: false});
-    // Note: on Node 6 Buffer.from(msg) should be used
-    ch.sendToQueue(exchange, new Buffer(msg));
-    console.log(" [x] Sent %s", msg);
+    var msg = null;
+    var key = null;
+
+    ch.assertExchange(ex, 'direct', {durable: false});
+    ch.publish(ex, severity, new Buffer(msg));
+    console.log(" [x] Sent %s: '%s'", key, msg);
   });
-  setTimeout(function() { conn.close(); process.exit(0) }, 500);
 });
