@@ -19,5 +19,5 @@ app.post('/speak', function (req, res) {
 var port = process.env.PORT || 80;
 
 var server = app.listen(port, function () {
-   console.log("HW3 RabbitMQ listening on port: " + port)
+   console.log("/listen on port: " + port)
 })
