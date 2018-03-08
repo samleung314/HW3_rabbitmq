@@ -55,7 +55,7 @@ function speak(key, msg) {
       console.log(" [x] Sent %s: '%s'", key, msg);
     });
 
-    setTimeout(function() { conn.close(); process.exit(0) }, 500);
+    setTimeout(function() { conn.close(); }, 500);
   });
 }
 
