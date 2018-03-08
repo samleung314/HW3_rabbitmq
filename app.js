@@ -49,8 +49,7 @@ function speak(key, msg) {
 
       ch.publish(ex, key, new Buffer(msg));
       console.log(" [x] Sent %s: '%s'", key, msg);
-      //setTimeout(function() { conn.close();}, 500);
-      conn.close();
+      setTimeout(function() { conn.close();}, 500);
     });
   });
 }
