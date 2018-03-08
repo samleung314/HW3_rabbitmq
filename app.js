@@ -18,7 +18,7 @@ function listen(keys, res) {
       ch.assertQueue('', { exclusive: true }, function (err, q) {
 
         keys.forEach(function (key) {
-          ch.bindQueue(q.queue, exchange, key);
+          ch.bindQueue(q.queue, exchange, key); 
         });
 
         ch.consume(q.queue, function (msg) {
