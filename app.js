@@ -59,10 +59,10 @@ function speak(key, msg) {
   });
 }
 
-app.post('/speak', function (req, res) {
-  console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
-  res.send(200);
-  //speak(req.body.key.toString(), req.body.msg.toString());
-})
+// app.post('/speak', function (req, res) {
+//   console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
+//   res.send(200);
+//   //speak(req.body.key.toString(), req.body.msg.toString());
+// })
 
 module.exports = app;
