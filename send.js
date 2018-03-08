@@ -1,8 +1,8 @@
-#!/usr/bin/env node
 
-var amqp = require('./node_modules/amqplib/callback_api');
 
-amqp.connect('localhost', function(err, conn) {
+var amqp = require('/amqplib/callback_api');
+
+amqp.connect('amqp://localhost', function(err, conn) {
   conn.createChannel(function(err, ch) {
     var q = 'hello';
     var msg = 'Hello World!';
