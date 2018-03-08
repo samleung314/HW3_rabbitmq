@@ -33,10 +33,10 @@ function listen(keys) {
             msg: msg.content.toString()
           });
 
+          conn.close();
         }, { noAck: true });
       });
     });
-    conn.close();
   });
 }
 
@@ -54,8 +54,8 @@ function speak(key, msg) {
 
       ch.publish(ex, key, new Buffer(msg));
       console.log(" [x] Sent %s: '%s'", key, msg);
+      conn.close();
     });
-    conn.close();
   });
 }
 
