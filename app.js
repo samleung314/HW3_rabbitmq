@@ -9,51 +9,51 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// function listen(keys) {
-//   var amqp = require('amqplib/callback_api');
-//   amqp.connect('amqp://localhost', function (err, conn) {
-//     conn.createChannel(function (err, ch) {
-//       var exchange = 'hw3';
+function listen(keys) {
+  var amqp = require('amqplib/callback_api');
+  amqp.connect('amqp://localhost', function (err, conn) {
+    conn.createChannel(function (err, ch) {
+      var exchange = 'hw3';
 
-//       ch.assertQueue('', { exclusive: true }, function (err, q) {
-//         console.log('Queue Created!');
+      ch.assertQueue('', { exclusive: true }, function (err, q) {
+        console.log('Queue Created!');
 
-//         keys.forEach(function (key) {
-//           ch.bindQueue(q.queue, exchange, key);
-//         });
+        keys.forEach(function (key) {
+          ch.bindQueue(q.queue, exchange, key);
+        });
 
-//         ch.consume(q.queue, function (msg) {
-//           console.log(" [x] Consume %s: '%s'", msg.fields.routingKey, msg.content.toString());
+        ch.consume(q.queue, function (msg) {
+          console.log(" [x] Consume %s: '%s'", msg.fields.routingKey, msg.content.toString());
 
-//           res.status(200).json({
-//             msg: msg.content.toString()
-//           });
+          res.status(200).json({
+            msg: msg.content.toString()
+          });
 
-//           conn.close();
-//         }, { noAck: true });
-//       });
-//     });
-//   });
-// }
+          conn.close();
+        }, { noAck: true });
+      });
+    });
+  });
+}
 
-// app.post('/listen', function (req, res) {
-//   console.log("(/listen) Keys: " + req.body.keys);
-//   listen(req.body.keys.toString().split(','));
-// })
+app.post('/listen', function (req, res) {
+  console.log("(/listen) Keys: " + req.body.keys);
+  listen(req.body.keys.toString().split(','));
+})
 
-// function speak(key, msg) {
-//   var amqp = require('amqplib/callback_api');
+function speak(key, msg) {
+  var amqp = require('amqplib/callback_api');
 
-//   amqp.connect('amqp://localhost', function (err, conn) {
-//     conn.createChannel(function (err, ch) {
-//       var ex = 'hw3';
+  amqp.connect('amqp://localhost', function (err, conn) {
+    conn.createChannel(function (err, ch) {
+      var ex = 'hw3';
 
-//       ch.publish(ex, key, new Buffer(msg));
-//       console.log(" [x] Sent %s: '%s'", key, msg);
-//       conn.close();
-//     });
-//   });
-// }
+      ch.publish(ex, key, new Buffer(msg));
+      console.log(" [x] Sent %s: '%s'", key, msg);
+      conn.close();
+    });
+  });
+}
 
 app.post('/speak', function (req, res) {
   console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
