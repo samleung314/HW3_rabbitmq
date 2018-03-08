@@ -60,7 +60,8 @@ function speak(key, msg) {
 }
 
 app.post('/speak', function (req, res) {
-  speak(req.body.key.toString(), req.body.msg.toString());
+  console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
+  //speak(req.body.key.toString(), req.body.msg.toString());
 })
 
 module.exports = app;
