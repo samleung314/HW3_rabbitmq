@@ -50,14 +50,14 @@ function speak(key, msg) {
 
       ch.publish(ex, key, new Buffer(msg));
       console.log(" [x] Sent %s: '%s'", key, msg);
-      conn.close();
+      setTimeout(function() { conn.close();}, 500);
     });
   });
 }
 
 app.post('/speak', function (req, res) {
-  console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
-  //res.sendStatus(200);
+  //console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
+  res.sendStatus(200);
   speak(req.body.key.toString(), req.body.msg.toString());
 })
 
