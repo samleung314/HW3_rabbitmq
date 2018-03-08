@@ -27,7 +27,7 @@ function listen(keys) {
         });
 
         ch.consume(q.queue, function (msg) {
-          console.log("Consumed![x] %s: '%s'", msg.fields.routingKey, msg.content.toString());
+          console.log(" [x] Consume %s: '%s'", msg.fields.routingKey, msg.content.toString());
 
           res.status(200).json({
             msg: msg.content.toString()
@@ -36,6 +36,7 @@ function listen(keys) {
         }, { noAck: true });
       });
     });
+    conn.close();
   });
 }
 
@@ -54,13 +55,11 @@ function speak(key, msg) {
       ch.publish(ex, key, new Buffer(msg));
       console.log(" [x] Sent %s: '%s'", key, msg);
     });
-
-    setTimeout(function() { conn.close(); }, 500);
+    conn.close();
   });
 }
 
 app.post('/speak', function (req, res) {
-  console.log("(/speak) Key: " + req.body.key + " Msg: " + req.body.msg);
   speak(req.body.key.toString(), req.body.msg.toString());
 })
 
