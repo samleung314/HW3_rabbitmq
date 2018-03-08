@@ -1,14 +1,16 @@
-var amqp = require('amqplib/callback_api');
+// app.js
+var express = require('express');
+var path = require('path');
+var bodyParser = require('body-parser');
 
-amqp.connect('amqp://localhost', function(err, conn) {
-  conn.createChannel(function(err, ch) {
-    var ex = 'hw3';
+//create express app
+var app = express();
 
-    var msg = null;
-    var key = null;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    ch.assertExchange(ex, 'direct', {durable: false});
-    ch.publish(ex, severity, new Buffer(msg));
-    console.log(" [x] Sent %s: '%s'", key, msg);
-  });
-});
+app.post('/speak', function (req, res) {
+  console.log("Key: " + req.body.key.toString() + " Msg: " + req.body.msg.toString());
+  res.send(200);
+  //speak(req.body.key.toString(), req.body.msg.toString());
+})
