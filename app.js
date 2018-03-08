@@ -17,7 +17,7 @@ app.post('/listen', function (req, res) {
   var keys = req.body.keys
   console.log("(/listen) Keys: " + keys);
 
-  keys = keys.split(',');
+  keys = keys.toString().split(',');
 
   var amqp = require('amqplib/callback_api');
   amqp.connect('amqp://localhost', function (err, conn) {
