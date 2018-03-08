@@ -27,7 +27,7 @@ function listen(keys) {
         });
 
         ch.consume(q.queue, function (msg) {
-          console.log(" [x] %s: '%s'", msg.fields.routingKey, msg.content.toString());
+          console.log("Consumed![x] %s: '%s'", msg.fields.routingKey, msg.content.toString());
 
           res.status(200).json({
             msg: msg.content.toString()
@@ -54,6 +54,8 @@ function speak(key, msg) {
       ch.publish(ex, key, new Buffer(msg));
       console.log(" [x] Sent %s: '%s'", key, msg);
     });
+
+    setTimeout(function() { conn.close(); process.exit(0) }, 500);
   });
 }
 
